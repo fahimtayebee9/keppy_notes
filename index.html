@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Clone Of Google Keep using JavaScript OOP concept and ES6 Module" />
+    <meta name="description" content="Clone Of Google Keep using JavaScript OOP concept and ES6 Module" />
+    <meta name="author" content="Md. Fahim Tayebee" />
+    <meta name="keywords" content="Keppy Notes" />
+    <meta name="robots" content="all" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta property="og:image" content="assets/img/ss_main.png" />
+
+    <meta property="og:description" content="Clone Of Google Keep using JavaScript OOP concept and ES6 Module" />
+
+    <meta property="og:url" content="http://www.fahimtayebee.com" />
+    <meta property="og:title" content="Keppy Notes" />
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+
+    <link rel="stylesheet" href="assets/lib/bootstrap-4.6.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/form.css">
+    <link rel="stylesheet" href="assets/css/timepicki.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap" rel="stylesheet">
+
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Script Area -->
+    <script src="assets/js/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.lazy.min.js"></script>
+    <script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script src="assets/js/timepicki.js"></script>
+
+    <title>Keppy Notes</title>
+</head>
+
+<body id="body-div">
+
+    <section id="preloader" style="display: none;">
+        <div class="wrapper">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="login" style="display: block;">
+        <div class="container">
+            <div class="row lgh">
+                <div class="col-md-10 m-auto">
+                    <div class="login-box row">
+                        <div class="box-left col-md-6">
+                            <img src="assets/img/content-writing.png" class="img-fluid" alt="">
+                        </div>
+                        <div class="box-right col-md-6">
+                            <div class="header-box">
+                                <img src="assets/img/app_icon.png" class="img-fluid" width="50px" alt="">
+                                <div class="hd-text">
+                                    <h1>Keppy Notes</h1>
+                                    <p>Please Login To Continue</p>
+                                </div>
+                            </div>
+
+                            <form class="form-box">
+                                <div class="form-group input-effect">
+                                    <input class="effect-16 inp-username" id="inp_username" type="text"
+                                        placeholder="Username">
+                                    <span class="focus-border"></span>
+                                </div>
+                                <div class="form-group input-effect">
+                                    <input class="effect-16 inp-password" type="password" id="inp_password"
+                                        placeholder="Password">
+                                    <span class="focus-border"></span>
+                                </div>
+                                <div class="btn-holder">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-custom btn-submit btnLogin">Submit</button>
+                                </div>
+                            </form>
+                            <div class="alert alert-warning">
+                                <p class="font-weight-normal m-0">For Demo Login Please Use,</p>
+                                <p class="username m-0">Username : <span>xyz_9100</span></p>
+                                <p class="password m-0">Password : <span>123456</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main" style="display: none;">
+        <div class="container-fluid">
+            <div class="row kp-header">
+                <div class="col-md-6 nav-left nav-kp">
+                    <div class="icon-box">
+                        <button type="button" class="btn-icon" id="iconBtn">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="logo-box">
+                        <img src="assets/img/app_icon.png" class="img-fluid" width="50px" alt="">
+                        <h1>Keppy Notes</h1>
+                    </div>
+                    <div class="search-box">
+                        <input type="search" name="search" id="searchField" class="inp-style form-control">
+                    </div>
+                </div>
+                <div class="col-md-4  nav-right nav-kp">
+                    <div class="user-box btn-list">
+                        <button type="button" class="btn-icon btnRefresh" id="refreshBtn">
+                            <i class="fas fa-redo-alt"></i>
+                        </button>
+                        <button type="button" class="btn-icon btnGridList" id="viewBtn">
+                            <!-- <i class="far fa-list-alt"></i> -->
+                            <i class="fas fa-border-all"></i>
+                        </button>
+                        <div class="darkLight"></div>
+                        <div class="userBtn">
+                            <div class="dropdown">
+                                <a href="" class="nav-link nav-link-profile" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <img src="" class="img-fluid user-img" alt="">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-header wd-200" x-placement="bottom-start" style="position: absolute; transform: translate3d(-18px, 48px, 0px); top: 0px; 
+                                        left: 0px; will-change: transform;">
+                                    <ul class="list-unstyled user-profile-nav">
+                                        <li><a href=""><i class="far fa-user-circle"></i> Edit Profile</a></li>
+                                        <li><a href="" type="button" class="signOutBtn"><i
+                                                    class="fas fa-sign-out-alt"></i> Sign Out</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- SIDEBAR START -->
+                <div class="sidebar">
+                    <!-- MENU ITEMS -->
+                    <ul class="nav_list list-unstyled">
+                        <li>
+                            <a href="" id="notesSb">
+                                <i class='bx bx-grid-alt'></i>
+                                <span class="links_name">Notes</span>
+                            </a>
+                            <span class="tooltip-x">Notes</span>
+                        </li>
+                        <li>
+                            <a href="" id="reminderSb">
+                                <i class='bx bx-window-alt'></i>
+                                <span class="links_name">Reminders</span>
+                            </a>
+                            <span class="tooltip-x">Reminders</span>
+                        </li>
+                        <li>
+                            <a href="" id="collabSb">
+                                <i class='bx bxs-user-detail'></i>
+                                <span class="links_name">Collaborated</span>
+                            </a>
+                            <span class="tooltip-x">Collaborated</span>
+                        </li>
+                        <li>
+                            <a href="" id="trashSb">
+                                <i class='bx bx-category'></i>
+                                <span class="links_name">Trash</span>
+                            </a>
+                            <span class="tooltip-x">Trash</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="home_content">
+                    <div class="noteMainBody">
+
+                        <div class="row">
+                            <div class="col-md-4 m-auto">
+                                <div class="noteInput-box" id="form-container">
+                                    <form id="form" class="from-Con" autocomplete="off">
+
+                                        <div class="formFields">
+                                            <input id="note-title" placeholder="Title" type="text">
+                                            <input id="note-text" placeholder="Take a note..." multiple type="text">
+                                            <div class="btn-row">
+                                                <div class="nBtn-body col-md-7 main-form">
+                                                    <button type="button" class="nBtn remindBtn" data-toggle="tooltip"
+                                                        data-placement="top" title="Reminder">
+                                                        <i class="far fa-bell"></i>
+                                                    </button>
+                                                    <button type="button" class="nBtn collaboratorBtn"
+                                                        data-toggle="tooltip" data-placement="top" title="Collaborator">
+                                                        <i class='bx bxs-user-plus'></i>
+                                                    </button>
+                                                    <button type="button" class="nBtn colorBtn dropdown-color"
+                                                        data-toggle="tooltip" data-placement="bottom" title="Color">
+                                                        <i class="fas fa-palette"></i>
+                                                    </button>
+                                                    <button type="button" class="nBtn tagBtn" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Tag">
+                                                        <i class="fas fa-pen-nib"></i>
+                                                    </button>
+                                                    <button type="button" class="nBtn imgBtn" data-toggle="tooltip"
+                                                        data-placement="top" title="Image">
+                                                        <i class="fas fa-paperclip"></i>
+                                                    </button>
+                                                    <button type="button" class="nBtn priorityBtn" data-toggle="tooltip"
+                                                        data-placement="top" title="Priority">
+                                                        <i class="far fa-star"></i>
+                                                    </button>
+                                                    <button type="button" class="nBtn trashBtn" id="frmTrash"
+                                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="cl-btns" id="form-buttons">
+                                                    <button type="button" class="closeBtn"
+                                                        id="form-close-button">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="btnModalLists">
+                                            <div class="colorList bmdl">
+                                                <div class="green clr" id="green"></div>
+                                                <div class="red clr" id="red"></div>
+                                                <div class="orange clr" id="orange"></div>
+                                                <div class="skyblue clr" id="skyblue"></div>
+                                            </div>
+
+                                            <div class="priorityList bmdl">
+                                                <div class="prl"><i id="1" class="prl_i far fa-star"></i></div>
+                                                <div class="prl"><i id="2" class="prl_i far fa-star"></i></div>
+                                                <div class="prl"><i id="3" class="prl_i far fa-star"></i></div>
+                                                <div class="prl"><i id="4" class="prl_i far fa-star"></i></div>
+                                                <div class="prl"><i id="5" class="prl_i far fa-star"></i></div>
+                                            </div>
+
+                                            <div class="reminderList bmdl">
+                                                <input type="time" name="timepicker"
+                                                    class=" form-control time_element" />
+                                                <input type="submit" value="Save" class="btn btn-info" id="saveTime">
+                                            </div>
+
+                                            <div class="collaboratorList bmdl">
+                                                <input type="text" list="colab_list" class=" form-control colab" />
+                                                <datalist id="colab_list"></datalist>
+                                                <input type="submit" value="Save" class="btn btn-info"
+                                                    id="collaboratorSave">
+                                            </div>
+
+                                            <div class="tagsList bmdl">
+                                                <input type="text" class=" form-control tags"
+                                                    placeholder="Insert Comma(,) to separate tags" />
+                                                <input type="submit" value="Save" class="btn btn-info" id="tagSave">
+                                            </div>
+
+                                            <div class="imgList bmdl">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="image">
+                                                    <label class="custom-file-label" for="image">Choose file</label>
+                                                </div>
+                                                <input type="submit" value="Save" class="btn btn-info" id="imageSave">
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row reminderMainList">
+
+                        </div>
+                        <div class="row notes-list">
+
+                        </div>
+                    </div>
+
+                    <div class="trashMainBody">
+                        <div class="row trashList">
+
+                        </div>
+                    </div>
+
+                    <div class="collaboratorBody">
+                        <div class="row collabList">
+
+                        </div>
+                    </div>
+
+                    <section id="modalList">
+                        <div class="modal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Modal body text goes here.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="assets/js/script.js" type="module"></script>
+
+    <script>
+        const menuBtn = document.querySelector('#iconBtn');
+        const sidebar = document.querySelector('.sidebar');
+        const home = document.querySelector('.home_content');
+
+        if (menuBtn != null) {
+            menuBtn.addEventListener('click', function () {
+                sidebar.classList.toggle('active');
+                home.classList.toggle('active');
+            });
+        }
+
+        $(function () {
+            $('[data-tooltip="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').click(function () {
+                $('[data-toggle="tooltip"]').tooltip("hide");
+            });
+        });
+
+        // $(document).ready(function(){
+        //     $(".time_element").timepicki();
+        // });
+    </script>
+
+</body>
+
+</html>
