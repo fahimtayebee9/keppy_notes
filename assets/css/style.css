@@ -452,10 +452,7 @@ body::-webkit-scrollbar-thumb {
   min-width: -webkit-fill-available;
   -webkit-appearance: textfield;
 }
-.noteInput-box .n-text {
-}
-.noteInput-box .n-btnList {
-}
+
 .nav-link {
   display: block;
   padding: 0 !important;
@@ -472,8 +469,7 @@ body::-webkit-scrollbar-thumb {
   display: none;
   text-align: right;
 }
-#submit-button,
-#form-close-button {
+#submit-button, #form-close-button {
   margin: 0.2em 0;
   box-sizing: border-box;
   color: rgba(0, 0, 0, 0.87);
@@ -496,8 +492,7 @@ body::-webkit-scrollbar-thumb {
   background-color: #007bff;
 }
 
-#submit-button:hover,
-#form-close-button:hover {
+#submit-button:hover, #form-close-button:hover {
   filter: brightness(95%);
 }
 .btn-row {
@@ -509,6 +504,13 @@ body::-webkit-scrollbar-thumb {
   display: none;
   justify-content: space-between;
   align-items: center;
+}
+.modal-form .nBtn-body{
+  display: block;
+  padding-left: 0;
+}
+.modal-form #form-buttons{
+  display: block;
 }
 .nBtn {
   border: none;
@@ -618,12 +620,28 @@ body::-webkit-scrollbar-thumb {
 .red{
   background: #ff8965;
 }
-.orange{
+.yellow{
   background: #ffd17b;
 }
 .skyblue{
   background: #92fbff;
 }
+.white {
+  background: white;
+}
+.purple {
+  background: #d7aefb;
+}
+.orange {
+  background: #fbbc04;
+}
+.teal {
+  background: #a7ffeb;
+}
+.transparent {
+  background: transparent!important;
+}
+
 .itemDrops{
   z-index: 9999;
 }
@@ -651,7 +669,7 @@ body::-webkit-scrollbar-thumb {
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  max-width: 140px;
+  max-width: 395px;
   min-width: 120px;
   padding: 12px;
   transition: all 0.2s ease-in-out;
@@ -662,6 +680,11 @@ body::-webkit-scrollbar-thumb {
 .bmdl.active{
   transform: scale(1.1);
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
 }
 .clr{
   width: 20px;
@@ -669,6 +692,7 @@ body::-webkit-scrollbar-thumb {
   border-radius: 25px;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
+  box-shadow: 0 0 1px 1px #00000040;
 }
 .clr:hover{
   filter: brightness(80%);
@@ -679,4 +703,14 @@ body::-webkit-scrollbar-thumb {
 }
 .date{
   font-size: 12px!important;
+}
+.reminderMainList{
+  padding-left: 70px;
+  display: none;
+}
+.reminderMainList h4{
+  font-size: 24px;
+  font-family: 'Poppins',sans-serif;
+  font-weight: 700;
+  font-style: italic;
 }

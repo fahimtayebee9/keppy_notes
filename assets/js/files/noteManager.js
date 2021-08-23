@@ -3,7 +3,7 @@ export default class NoteManager {
         
     ];
 
-    constructor(id, title, text, priority, color, date, collaborator = [], pin, user_id, remind_date, image, tags){
+    constructor(id, title, text, priority, color, date, collaborator = [], pin, user_id, remind_date, image, edited = false){
         this.id             = id;
         this.title          = title;
         this.priority       = priority;
@@ -15,8 +15,8 @@ export default class NoteManager {
         this.user_id        = user_id;
         this.remind_date    = remind_date;
         this.image          = image;
-        this.tags           = tags;
         this.trash          = false;
+        this.edited         = edited;
     }
     
     static filterUserNotes(notes , user_id){
@@ -55,7 +55,7 @@ export default class NoteManager {
                         "user_id"       : note.user_id, 
                         "remind_date"   : note.remind_date, 
                         "image"         : note.image,
-                        "tags"          : note.tags
+                        "edited"        : note.edited
                     };
         }
     }

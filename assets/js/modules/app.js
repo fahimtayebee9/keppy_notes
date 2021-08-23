@@ -6,6 +6,12 @@ import Auth from "./auth.js";
 import TrashManager from "../files/trashManager.js";
 
 export default class App{
+    static init = () => {
+        App.displayTrashList();
+        App.displayNotes();
+        App.displaySharedNotes();
+        Auth.renderAll();
+    }
 
     static displayTrashList = () => {
         Element.trashMainBody.style.display = "none";
@@ -45,54 +51,6 @@ export default class App{
         Element.trashList.innerHTML = markUp;
     }
 
-    static init = () => {
-        App.displayTrashList();
-        App.displayNotes();
-        App.displaySharedNotes();
-        Auth.renderAll();
-    }
-
-    static openForm = () => {
-        Element.noteTitle.style.display     = "block";
-        Element.nBtnBody.style.display      = "flex";
-        Element.clBtns.style.display        = "block";
-    }
-
-    static closeForm = () => {
-        Element.noteTitle.style.display     = "none";
-        Element.nBtnBody.style.display      = "none";
-        Element.clBtns.style.display        = "none";
-    }
-
-    static TrashAction = () => {
-        document.querySelectorAll('.trashBtn').forEach(trashBtn => {
-            trashBtn.addEventListener('click', function(event){
-                const noteId = event.target.id.split('_')[1];
-                TrashManager.addToTrash(noteId);
-                // location.reload();
-            });
-        });
-
-        document.querySelectorAll('.trashBtn>i').forEach(trashBtn => {
-            trashBtn.addEventListener('click', function(event){
-                event.preventDefault();
-                TrashManager.addToTrash(event.target.id);
-                // location.reload();
-            });
-        });
-    }
-
-    static GetSortOrder = (prop) => {    
-        return function(a, b) {    
-            if (a[prop] > b[prop]) {    
-                return 1;    
-            } else if (a[prop] < b[prop]) {    
-                return -1;    
-            }    
-            return 0;    
-        }    
-    }  
-
     static displayNotes = () => {
         if(Auth.checkUser()){
             const allNotes = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? 
@@ -102,16 +60,21 @@ export default class App{
             let markUp = "";
             if(Boolean(sortedNotes)){
                 sortedNotes.forEach( item => {
-                    console.log(Number(item.priority));
+                    const remaining_time = new Date().getTime();
+                    console.log(remaining_time);
+                    // if(item.){
+
+                    // }
                     const createDate = new Date(item.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric' });
-                    markUp += `<div class="note noteMd noteBtn ${item.color} col-md-2" data-toggle="modal" data-target="#note_${item.id}">
+                    const dataInfo   = (item.edited == false) ? "Created At" : "Edited At";
+                    markUp += `<div class="note noteMd noteBtn ${item.color} col-md-2" id="${item.id}">
                                     <div class="n-con">
                                         <div class="img-con" style="display: none;">
                                             <img src="" alt="">
                                         </div>
                                         <h6 class="title">${item.title}</h6>
                                         <p class="text">${item.text}</p>
-                                        <p class="text text-right pt-3 date">Created At ${createDate}</p>
+                                        <p class="text text-right pt-3 date">${dataInfo} ${createDate}</p>
                                     </div>
                                     <div class="hv-btns">
                                         <div class="top-area">
@@ -128,9 +91,6 @@ export default class App{
                                             </button>
                                             <button type="button" class="nBtn colorBtn" data-toggle="tooltip" data-placement="top" title="Color">
                                                 <i class="fas fa-palette"></i>
-                                            </button>
-                                            <button type="button" class="nBtn tagBtn" data-toggle="tooltip" data-placement="top" title="Tag">
-                                                <i class="fas fa-pen-nib"></i>
                                             </button>
                                             <button type="button" class="nBtn imgBtn" data-toggle="tooltip" data-placement="top" title="Image">
                                                 <i class="fas fa-paperclip"></i>
@@ -155,8 +115,6 @@ export default class App{
             const allNotes = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? 
                         NoteManager.filterSharedNotes(JSON.parse(localStorage.getItem('notes')) , Auth.getUser().u_id) : null;
             const sortedNotes = (Boolean(allNotes)) ? allNotes.sort((a, b) => parseFloat(Number(a.priority)) > parseFloat(Number(b.priority))) : [];
-
-            console.log(sortedNotes);
 
             let markUp = "";
             if(Boolean(sortedNotes)){
@@ -210,6 +168,36 @@ export default class App{
         }
     }
 
+    static openForm = () => {
+        Element.noteTitle.style.display     = "block";
+        Element.nBtnBody.style.display      = "flex";
+        Element.clBtns.style.display        = "block";
+    }
+
+    static closeForm = () => {
+        Element.noteTitle.style.display     = "none";
+        Element.nBtnBody.style.display      = "none";
+        Element.clBtns.style.display        = "none";
+    }
+
+    static TrashAction = () => {
+        document.querySelectorAll('.trashBtn').forEach(trashBtn => {
+            trashBtn.addEventListener('click', function(event){
+                const noteId = event.target.id.split('_')[1];
+                TrashManager.addToTrash(noteId);
+                // location.reload();
+            });
+        });
+
+        document.querySelectorAll('.trashBtn>i').forEach(trashBtn => {
+            trashBtn.addEventListener('click', function(event){
+                event.preventDefault();
+                TrashManager.addToTrash(event.target.id);
+                // location.reload();
+            });
+        });
+    }
+
     static addNewNote = () => {
         if(Boolean(Element.noteTitle.value) && Boolean(Element.noteText.value)){
             let notesCount = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')).length : 0;
@@ -224,8 +212,8 @@ export default class App{
                 (Boolean(localStorage.getItem('pinned'))) ? localStorage.getItem('pinned') : false, 
                 Auth.getUser().u_id, 
                 (Boolean(localStorage.getItem('reminderTime'))) ? localStorage.getItem('reminderTime') : null, 
-                (Boolean(localStorage.getItem('image'))) ? localStorage.getItem('image') : null, 
-                (Boolean(localStorage.getItem('tags'))) ? localStorage.getItem('tags') : null
+                (Boolean(localStorage.getItem('image'))) ? localStorage.getItem('image') : null,
+                false
             );
             const jsonNote = NoteManager.convertToJson(note);
             NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
@@ -296,16 +284,6 @@ export default class App{
             Element.btnModalLists.classList.remove('active');
         });
 
-        Element.tagSave.addEventListener('click', event => {
-            const tags = Element.tags.value;
-            localStorage.setItem('tags', tags);
-            Element.tagsList.classList.toggle('active');
-            Element.btnModalLists.classList.remove('active');
-        });
-    }
-
-    static removeAllButtonAction = (elem) => {
-        
     }
 
     static displayUsersList = () => {
@@ -332,11 +310,6 @@ export default class App{
             Element.reminderFormBody.classList.toggle('active');
         });
 
-        Element.tagBtn.addEventListener('click', function(){
-            Element.btnModalLists.classList.toggle('active');
-            Element.tagsList.classList.toggle('active');
-        });
-
         Element.imgBtn.addEventListener('click', function(){
             Element.btnModalLists.classList.toggle('active');
             Element.imgList.classList.toggle('active');
@@ -359,9 +332,57 @@ export default class App{
     }
 
     static openEditModal = (event) => {
-        console.log("clicked");
-        Element.modal.classList.toggle('show');
-        console.log(Element.modal);
+        if(event.target.closest(".note")){
+            Element.modal.classList.toggle('open-modal');
+        }
+    }
+
+    static _selectNote = (event) => {
+        let selected_note = null;
+        const note_el = event.target.closest('.note');
+        if(Boolean(note_el)){
+            console.log(note_el.id);
+            const allNotes = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? 
+                            NoteManager.filterUserNotes(JSON.parse(localStorage.getItem('notes')) , Auth.getUser().u_id) : null;
+            if(Boolean(allNotes)){
+                selected_note = allNotes.filter( note => { return note.id == note_el.id; })[0];
+                if(Boolean(selected_note)){
+                    Element.m_title.value = selected_note.title;
+                    Element.m_text.value = selected_note.text;
+                    document.querySelector('#nid_hdn').value = selected_note.id;
+                }
+            }
+        }
+    }
+
+    static saveEditedNote = () => {
+        const note = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? 
+                        NoteManager.filterUserNotes(JSON.parse(localStorage.getItem('notes')) , 
+                                                    Auth.getUser().u_id).filter( note => { 
+                                                        return note.id == document.querySelector('#nid_hdn').value; 
+                                                    })[0] : null;
+        NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
+        NoteManager.notesList.pop(note);
+
+        if(Boolean(Element.m_title.value) && Boolean(Element.m_text.value) 
+            && Element.m_title.value.trim() != note.title.trim() 
+            || Element.m_text.value.trim() != note.text.trim()){
+            
+            note.title  = Element.m_title.value;
+            note.text   = Element.m_text.value;
+            note.date   = new Date();
+            note.edited = true;
+
+            const jsonNote = NoteManager.convertToJson(note);
+            NoteManager.notesList.push(jsonNote);
+            localStorage.removeItem('notes');
+            localStorage.setItem('notes', JSON.stringify(NoteManager.notesList));
+            App.clearLocalStorage();
+            location.reload();
+        }
+        else{
+            Element.modal.classList.remove('open-modal');
+        }
     }
 
     static removeActive = () => {
@@ -377,10 +398,12 @@ export default class App{
     }
 
     static eventListeners = () => {
-        Element.home_content.addEventListener('click', function(){
+        document.body.addEventListener('click', function(event){
             App.addNewNote();
             App.removeActive();
             App.closeForm();
+            App._selectNote(event);
+            App.openEditModal(event);
         });
 
         Element.form.addEventListener('click', event => {
@@ -391,6 +414,7 @@ export default class App{
             else{
                 App.addNewNote();
                 App.closeForm();
+                App.clearLocalStorage();
             }
         });
 
@@ -400,10 +424,10 @@ export default class App{
 
         Element.closeBtn.addEventListener('click', event => {
             event.stopPropagation();
+            console.log("modal btn");
             App.closeForm();
-            App.removeAllButtonAction();
             App.addNewNote();
-            // App.clearLocalStorage();
+            App.clearLocalStorage();
         });
 
         Element.notesSB.addEventListener('click', event => {
@@ -461,6 +485,8 @@ export default class App{
                 });
             })
         });
+
+        Element.closeBtnM.addEventListener('click', this.saveEditedNote);
     }
 
     // RENDER ALL

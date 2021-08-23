@@ -273,7 +273,7 @@ input:focus {
     border: 1px solid black;
 }
 
-/* .modal {
+.modal {
     position: fixed;
     left: 0;
     z-index: 200;
@@ -295,7 +295,8 @@ input:focus {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 1rem 1.5rem;
+    padding: 1rem 0.5rem;
+    padding-bottom: 0;
     width: 24rem;
     border-radius: 0.5rem;
 }
@@ -322,27 +323,13 @@ input:focus {
 
 .modal-close-button:hover {
     background-color: rgba(95, 99, 104, 0.039);
-} */
+}
 
 .open-modal {
     opacity: 1;
+    display: block;
     visibility: visible;
     transform: scale(1);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
-#white {
-    background: white;
-}
-
-#purple {
-    background: #d7aefb;
-}
-
-#orange {
-    background: #fbbc04;
-}
-
-#teal {
-    background: #a7ffeb;
-}
