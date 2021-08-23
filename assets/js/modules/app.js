@@ -13,7 +13,7 @@ export default class App{
         let markUp = "";
         if(Boolean(allNotes)){
             allNotes.forEach( item => {
-                markUp += `<div class="note noteBtn" data-toggle="modal" data-target="#note_${item.id}">
+                markUp += `<div class="note noteBtn col-md-2" data-toggle="modal" data-target="#note_${item.id}">
                                 <div class="n-con">
                                     <div class="img-con" style="display: none;">
                                         <img src="" alt="">
@@ -23,25 +23,8 @@ export default class App{
                                 </div>
                                 <div class="hv-btns">
                                     <div class="top-area">
-                                        <button class="nBtn pinBtn" id="pinBtn" data-toggle="tooltip" data-placement="top" title="Pin">
-                                            <i class="fas fa-map-pin"></i>
-                                        </button>
-                                    </div>
-                                    <div class="bottom-area">
-                                        <button type="button" class="nBtn remindBtn" data-toggle="tooltip" data-placement="top" title="Reminder">
+                                        <button type="button" class="nBtn remindBtn" data-toggle="tooltip" data-placement="top" title="Restore">
                                             <i class="far fa-bell"></i>
-                                        </button>
-                                        <button type="button" class="nBtn collaboratorBtn" data-toggle="tooltip" data-placement="top" title="Collaborator">
-                                            <i class='bx bxs-user-plus'></i>
-                                        </button>
-                                        <button type="button" class="nBtn colorBtn" data-toggle="tooltip" data-placement="top" title="Color">
-                                            <i class="fas fa-palette"></i>
-                                        </button>
-                                        <button type="button" class="nBtn tagBtn" data-toggle="tooltip" data-placement="top" title="Tag">
-                                            <i class="fas fa-pen-nib"></i>
-                                        </button>
-                                        <button type="button" class="nBtn imgBtn" data-toggle="tooltip" data-placement="top" title="Image">
-                                            <i class="fas fa-paperclip"></i>
                                         </button>
                                         <button type="button" class="nBtn trashBtn" id="nid_${item.id}" data-toggle="tooltip" data-placement="top" title="Delete">
                                             <i class="far fa-trash-alt" id="nid_${item.id}"></i>
