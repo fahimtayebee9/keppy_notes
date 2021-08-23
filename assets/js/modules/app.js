@@ -381,8 +381,22 @@ export default class App{
         console.log(Element.modal);
     }
 
+    static removeActive = () => {
+        Element.btnModalLists.classList.remove('active');
+        Element.colorList.classList.remove('active');
+        Element.priorityList.classList.remove('active');
+        Element.collaboratorList.classList.remove('active');
+        Element.imgList.classList.remove('active');
+        Element.reminderFormBody.classList.remove('active');
+        Element.noteTitle.innerHTML = "";
+        Element.noteText.innerHTML = "";
+        App.clearLocalStorage();
+    }
+
     static eventListeners = () => {
         Element.home_content.addEventListener('click', function(){
+            App.addNewNote();
+            App.removeActive();
             App.closeForm();
         });
 
@@ -392,6 +406,7 @@ export default class App{
                 App.openForm();
             }
             else{
+                App.addNewNote();
                 App.closeForm();
             }
         });
