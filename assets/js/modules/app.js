@@ -1,4 +1,3 @@
-
 import NoteManager from "./../files/noteManager.js";
 import UserManager from "./../files/userManager.js";
 import Element from "./element.js";
@@ -7,10 +6,63 @@ import TrashManager from "../files/trashManager.js";
 
 export default class App{
     static init = () => {
-        App.displayTrashList();
-        App.displayNotes();
-        App.displaySharedNotes();
         Auth.renderAll();
+        if(Auth.checkUser()){
+            this.displayTrashList();
+            this.displayNotes();
+            this.displaySharedNotes();
+        }
+    }
+
+    static writeNote = (item, remind = false, trash = false) => {
+        let markUp = "";
+        const createDate = new Date(item.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric', hour12: true , hour: "2-digit", minute: "2-digit" });
+        const remind_date = new Date(item.remind_date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric' , hour12: true, hour: "2-digit", minute: "2-digit" });
+        const dataInfo   = (item.edited == false) ? "Created At" : "Edited At";
+        const remind_val = (remind == true) ? `<p class="text text-right pt-3 date">Reminder ${remind_date}</p>` : '';
+        if(trash == true){
+            markUp += `<div class="note noteBtn col-md-2" data-toggle="modal" data-target="#note_${item.id}">
+                            <div class="n-con">
+                                <div class="img-con" style="display: none;">
+                                    <img src="" alt="">
+                                </div>
+                                <h6 class="title">${item.title}</h6>
+                                <p class="text">${item.text}</p>
+                            </div>
+                            <div class="hv-btns">
+                                <div class="top-area">
+                                    <button type="button" class="nBtn restoreBtn" data-toggle="tooltip" id="${item.id}" data-placement="top" title="Restore">
+                                        <i class="fas fa-trash-restore restoreBtn_i" id="${item.id}"></i>
+                                    </button>
+                                    <button type="button" class="nBtn removeBtn" id="${item.id}" data-toggle="tooltip" data-placement="top" title="Delete">
+                                        <i class="far fa-trash-alt" id="${item.id}"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>`;
+        }
+        else{
+            markUp += `<div class="note noteMd noteBtn ${item.color} col-md-2" id="${item.id}">
+                            <div class="n-con">
+                                <div class="img-con" style="display: none;">
+                                    <img src="" alt="">
+                                </div>
+                                <h6 class="title">${item.title}</h6>
+                                <p class="text">${item.text}</p>
+                                <p class="text text-right pt-3 date">${dataInfo} ${createDate}</p>
+                                ${remind_val}
+                            </div>
+                            <div class="hv-btns">
+                                <div class="top-area">
+                                    <button type="button" class="nBtn trashBtn tbtn" id="nid_${item.id}" data-toggle="tooltip" data-placement="top" title="Delete">
+                                        <i class="far fa-trash-alt" id="nid_${item.id}"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+        }
+        return markUp;
     }
 
     static displayTrashList = () => {
@@ -19,26 +71,7 @@ export default class App{
         let markUp = "";
         if(Boolean(allNotes)){
             allNotes.forEach( item => {
-                markUp += `<div class="note noteBtn col-md-2" data-toggle="modal" data-target="#note_${item.id}">
-                                <div class="n-con">
-                                    <div class="img-con" style="display: none;">
-                                        <img src="" alt="">
-                                    </div>
-                                    <h6 class="title">${item.title}</h6>
-                                    <p class="text">${item.text}</p>
-                                </div>
-                                <div class="hv-btns">
-                                    <div class="top-area">
-                                        <button type="button" class="nBtn remindBtn" data-toggle="tooltip" data-placement="top" title="Restore">
-                                            <i class="far fa-bell"></i>
-                                        </button>
-                                        <button type="button" class="nBtn trashBtn" id="nid_${item.id}" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="far fa-trash-alt" id="nid_${item.id}"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                            </div>`;
+                markUp += App.writeNote(item, false, true);
             });
         }
         else{
@@ -60,48 +93,7 @@ export default class App{
             let markUp = "";
             if(Boolean(sortedNotes)){
                 sortedNotes.forEach( item => {
-                    const remaining_time = new Date().getTime();
-                    console.log(remaining_time);
-                    // if(item.){
-
-                    // }
-                    const createDate = new Date(item.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric' });
-                    const dataInfo   = (item.edited == false) ? "Created At" : "Edited At";
-                    markUp += `<div class="note noteMd noteBtn ${item.color} col-md-2" id="${item.id}">
-                                    <div class="n-con">
-                                        <div class="img-con" style="display: none;">
-                                            <img src="" alt="">
-                                        </div>
-                                        <h6 class="title">${item.title}</h6>
-                                        <p class="text">${item.text}</p>
-                                        <p class="text text-right pt-3 date">${dataInfo} ${createDate}</p>
-                                    </div>
-                                    <div class="hv-btns">
-                                        <div class="top-area">
-                                            <button class="nBtn pinBtn" id="pinBtn" data-toggle="tooltip" data-placement="top" title="Pin">
-                                                <i class="fas fa-map-pin"></i>
-                                            </button>
-                                        </div>
-                                        <div class="bottom-area">
-                                            <button type="button" class="nBtn remindBtn" data-toggle="tooltip" data-placement="top" title="Reminder">
-                                                <i class="far fa-bell"></i>
-                                            </button>
-                                            <button type="button" class="nBtn collaboratorBtn" data-toggle="tooltip" data-placement="top" title="Collaborator">
-                                                <i class='bx bxs-user-plus'></i>
-                                            </button>
-                                            <button type="button" class="nBtn colorBtn" data-toggle="tooltip" data-placement="top" title="Color">
-                                                <i class="fas fa-palette"></i>
-                                            </button>
-                                            <button type="button" class="nBtn imgBtn" data-toggle="tooltip" data-placement="top" title="Image">
-                                                <i class="fas fa-paperclip"></i>
-                                            </button>
-                                            <button type="button" class="nBtn trashBtn" id="nid_${item.id}" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="far fa-trash-alt" id="nid_${item.id}"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                </div>`;
+                    markUp += App.writeNote(item, false, false);
                 });
             }
             
@@ -183,9 +175,10 @@ export default class App{
     static TrashAction = () => {
         document.querySelectorAll('.trashBtn').forEach(trashBtn => {
             trashBtn.addEventListener('click', function(event){
+                event.stopPropagation();
                 const noteId = event.target.id.split('_')[1];
                 TrashManager.addToTrash(noteId);
-                // location.reload();
+                location.reload();
             });
         });
 
@@ -202,9 +195,9 @@ export default class App{
         if(Boolean(Element.noteTitle.value) && Boolean(Element.noteText.value)){
             let notesCount = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')).length : 0;
             const note = new NoteManager(
-                ++notesCount, 
+                (notesCount > 0 ) ? ++NoteManager.getAllNotes()[ notesCount - 1 ].id : 1 , 
                 Element.noteTitle.value, 
-                Element.noteText.value, 
+                Element.noteText.value,
                 (Boolean(localStorage.getItem('priority_val'))) ? localStorage.getItem('priority_val') : 0, 
                 (Boolean(localStorage.getItem('note_bg'))) ? localStorage.getItem('note_bg') : null, 
                 new Date(), 
@@ -215,17 +208,10 @@ export default class App{
                 (Boolean(localStorage.getItem('image'))) ? localStorage.getItem('image') : null,
                 false
             );
-            const jsonNote = NoteManager.convertToJson(note);
-            NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
-            NoteManager.notesList.push(jsonNote);
-            localStorage.setItem('notes', JSON.stringify(NoteManager.notesList));
+            NoteManager.addNewNote(note);
             App.clearLocalStorage();
             location.reload();
         }
-    }
-
-    static formAction = () => {
-        
     }
 
     static fromButtonActionResult = () => {
@@ -236,6 +222,7 @@ export default class App{
             item.addEventListener('click', event => {
                 const bg_color = event.target.id;
                 localStorage.setItem('note_bg', bg_color);
+                
                 Element.colorList.classList.toggle('active');
                 Element.btnModalLists.classList.remove('active');
             });
@@ -263,7 +250,7 @@ export default class App{
             
         });
 
-        Element.saveTime.addEventListener('click', event => {
+        Element.time_element.addEventListener('change', event => {
             const reminderTime = Element.time_element.value;
             localStorage.setItem('reminderTime', reminderTime);
             Element.reminderFormBody.classList.toggle('active');
@@ -274,13 +261,6 @@ export default class App{
             const colab = Element.colab.value;
             localStorage.setItem('collaborator', colab);
             Element.collaboratorList.classList.toggle('active');
-            Element.btnModalLists.classList.remove('active');
-        });
-
-        Element.imageSave.addEventListener('click', () => {
-            const image = Element.image.files[0].name;
-            localStorage.setItem('image', image);
-            Element.imgList.classList.toggle('active');
             Element.btnModalLists.classList.remove('active');
         });
 
@@ -295,30 +275,58 @@ export default class App{
     }
 
     static formButtonAction = () => {
-        Element.colorBtn.addEventListener('click', event => {
-            Element.btnModalLists.classList.toggle('active');
-            Element.colorList.classList.toggle('active');
+        Element.colorBtn.forEach(item => {
+            item.addEventListener('click', event => {
+                if(event.target.id == "modal_clrb" || event.target.closest('#modal_clrb')){
+                    Element.btnModalLists_modal.classList.toggle('active');
+                    Element.colorList_m.classList.toggle('active');
+                }
+                else{
+                    Element.btnModalLists.classList.toggle('active');
+                    Element.colorList.classList.toggle('active');
+                }
+            });
         });
 
-        Element.priorityBtn.addEventListener('click', function(){
-            Element.btnModalLists.classList.toggle('active');
-            Element.priorityList.classList.toggle('active');
+        Element.priorityBtn.forEach( item => {
+            item.addEventListener('click', event => {
+                if(event.target.id == "modal_prb" || event.target.closest('#modal_prb')){
+                    Element.btnModalLists_modal.classList.toggle('active');
+                    Element.priorityList_m.classList.toggle('active');
+                }
+                else{
+                    Element.btnModalLists.classList.toggle('active');
+                    Element.priorityList.classList.toggle('active');
+                }
+            });    
         });
 
-        Element.remindBtn.addEventListener('click', function(){
-            Element.btnModalLists.classList.toggle('active');
-            Element.reminderFormBody.classList.toggle('active');
+        Element.remindBtn.forEach( item => {
+            item.addEventListener('click', event =>{
+                if(event.target.id == "modal_rmd" || event.target.closest('#modal_rmd')){
+                    Element.btnModalLists_modal.classList.toggle('active');
+                    Element.reminderFormBody_m.classList.toggle('active');
+                }
+                else{
+                    Element.btnModalLists.classList.toggle('active');
+                    Element.reminderFormBody.classList.toggle('active');
+                }
+            });
         });
 
-        Element.imgBtn.addEventListener('click', function(){
-            Element.btnModalLists.classList.toggle('active');
-            Element.imgList.classList.toggle('active');
-        });
-
-        Element.collaboratorBtn.addEventListener('click', function(){
-            Element.btnModalLists.classList.toggle('active');
-            Element.collaboratorList.classList.toggle('active');
-            App.displayUsersList();
+        Element.collaboratorBtn.forEach( item => {
+            item.addEventListener('click', event => {
+                console.log(event.target);
+                if(event.target.id == "modal_collab" || event.target.closest('#modal_collab')){
+                    Element.btnModalLists_modal.classList.toggle('active');
+                    Element.collaboratorList_m.classList.toggle('active');
+                }
+                else{
+                    Element.btnModalLists.classList.toggle('active');
+                    Element.collaboratorList.classList.toggle('active');
+                }
+                App.displayUsersList();
+            });
         });
     }
 
@@ -341,7 +349,6 @@ export default class App{
         let selected_note = null;
         const note_el = event.target.closest('.note');
         if(Boolean(note_el)){
-            console.log(note_el.id);
             const allNotes = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? 
                             NoteManager.filterUserNotes(JSON.parse(localStorage.getItem('notes')) , Auth.getUser().u_id) : null;
             if(Boolean(allNotes)){
@@ -356,18 +363,12 @@ export default class App{
     }
 
     static saveEditedNote = () => {
-        const note = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? 
-                        NoteManager.filterUserNotes(JSON.parse(localStorage.getItem('notes')) , 
-                                                    Auth.getUser().u_id).filter( note => { 
-                                                        return note.id == document.querySelector('#nid_hdn').value; 
-                                                    })[0] : null;
+        const note = NoteManager.findById(document.querySelector('#nid_hdn').value);
         NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
-        NoteManager.notesList.pop(note);
+        
+        if(Boolean(Element.m_title.value) && Boolean(Element.m_text.value) && Element.m_title.value.trim() != note.title.trim() || Element.m_text.value.trim() != note.text.trim()){
 
-        if(Boolean(Element.m_title.value) && Boolean(Element.m_text.value) 
-            && Element.m_title.value.trim() != note.title.trim() 
-            || Element.m_text.value.trim() != note.text.trim()){
-            
+            NoteManager.notesList.pop(note);
             note.title  = Element.m_title.value;
             note.text   = Element.m_text.value;
             note.date   = new Date();
@@ -390,11 +391,53 @@ export default class App{
         Element.colorList.classList.remove('active');
         Element.priorityList.classList.remove('active');
         Element.collaboratorList.classList.remove('active');
-        Element.imgList.classList.remove('active');
         Element.reminderFormBody.classList.remove('active');
         Element.noteTitle.innerHTML = "";
         Element.noteText.innerHTML = "";
         App.clearLocalStorage();
+    }
+
+    static displayReminderMain = () => {
+        const all_notes = NoteManager.getAllNotes();
+        let markUp = "";
+        if(Boolean(all_notes)){
+            all_notes.forEach(item => {
+                var minutesDifference = (Date.parse(item.remind_date) > new Date().getTime()) ? 
+                                        Math.floor( ( Date.parse(item.remind_date) - new Date().getTime() ) /1000/60) : null;
+                if(minutesDifference <= 30 && minutesDifference != null){
+                    markUp += App.writeNote(item, true, false);
+                }
+            });
+
+            if(Boolean(markUp)){
+                Element.reminderMainList.style.display = "block";
+                Element.rmListcon.innerHTML = markUp;
+            }
+            else{
+                Element.reminderMainList.style.display = "none";
+                Element.rmListcon.innerHTML = "";
+            }
+        }
+    }
+
+    static makeAlert = () => {
+        const all_notes = NoteManager.getAllNotes();
+        if(Boolean(all_notes)){
+            all_notes.forEach(item => {
+                var minutesDifference = (Date.parse(item.remind_date) >= new Date().getTime()) ? 
+                                        Math.floor( ( Date.parse(item.remind_date) - new Date().getTime() ) /1000/60) : null;
+                if(minutesDifference == 0 && minutesDifference != null ){
+                    const audio = new Audio('assets/media/swiftly-610.mp3');
+                    audio.load();
+                    audio.play();
+                    setTimeout(() => {
+                        if(!audio.paused){
+                            audio.pause();
+                        }
+                    }, 2000);
+                }
+            });
+        }
     }
 
     static eventListeners = () => {
@@ -461,7 +504,7 @@ export default class App{
                     element.classList.add('col-md-4');
                     element.style.margin = "auto";
                     element.style.marginBottom = "15px";
-                    console.log("click if");
+                    Element.btnGridList.innerHTML = "<i class='far fa-list-alt'></i>";
                 }
                 else if(element.classList.contains('col-md-4')){
                     Element.notesList.classList.remove('d-block');
@@ -469,7 +512,7 @@ export default class App{
                     element.classList.add('col-md-2');
                     element.classList.remove('col-md-4');
                     element.style.margin = "15px";
-                    console.log("click else if");
+                    Element.btnGridList.innerHTML = "<i class='fas fa-border-all'></i>";
                 }
             });
         });
@@ -487,15 +530,55 @@ export default class App{
         });
 
         Element.closeBtnM.addEventListener('click', this.saveEditedNote);
+
+        document.querySelectorAll('.pinBtn').forEach( el => {
+            el.addEventListener('click', event => {
+                event.stopPropagation();
+                const note = NoteManager.findById(event.target.id);
+                NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
+                NoteManager.notesList.pop(note);
+                if(note.pin == false){
+                    note.pin = true;
+                    el.classList.add('pinned');
+                }
+                else if(note.pin == true){
+                    note.pin = false;
+                    el.classList.remove('pinned');
+                }
+                const jsonNote = NoteManager.convertToJson(note);
+                NoteManager.notesList.push(jsonNote);
+                localStorage.removeItem('notes');
+                localStorage.setItem('notes', JSON.stringify(NoteManager.notesList));
+                App.clearLocalStorage();
+                this.displayNotes();
+            });
+        });
+
+        document.querySelectorAll('.removeBtn').forEach( item => {
+            item.addEventListener('click', event => {
+                TrashManager.removeFromTrash(event.target.id);
+                location.reload();
+            });
+        });
+
+        document.querySelectorAll('.restoreBtn').forEach( item => {
+            item.addEventListener('click', event => {
+                TrashManager.restoreFromTrash(event.target.id);
+                location.reload();
+            });
+        });
     }
 
     // RENDER ALL
     static renderAll = () => {
         App.init();
         App.eventListeners();
-        App.formAction();
-        // App.displayModals();
-
+        App.displayReminderMain();
+        setInterval(()=>{
+            App.displayReminderMain();
+            App.makeAlert();
+        });
+        
         // localStorage.removeItem('notes');
         // localStorage.removeItem('user');
         // localStorage.removeItem('trashNotes');

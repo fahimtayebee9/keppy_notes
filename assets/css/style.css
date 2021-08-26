@@ -521,7 +521,7 @@ body::-webkit-scrollbar-thumb {
   padding: 0 50px;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-content: center;
   justify-content: flex-start;
   align-items: center;
@@ -659,6 +659,9 @@ body::-webkit-scrollbar-thumb {
   bottom: 0%;
   left: 0%;
 }
+.btnModalLists_m{
+  border-radius: 8px;
+}
 .btnModalLists.active{
   background: #1f00502a;
   width: 100%;
@@ -713,4 +716,12 @@ body::-webkit-scrollbar-thumb {
   font-family: 'Poppins',sans-serif;
   font-weight: 700;
   font-style: italic;
+}
+.pinned{
+  background: #1f0050;
+  color: white;
+  transition: 0.2s all ease-in-out;
+}
+.clbtn:hover .btnModalLists .colorList{
+  display: block;
 }

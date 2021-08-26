@@ -56,10 +56,10 @@ main {
     transition-timing-function: ease-in;
 }
 
-#form {
+
+.from-Con {
     position: relative;
     border: none;
-    margin: 1px;
     border-radius: 8px;
     transition-duration: 0.218s;
     transition-property: background, border, opacity, box-shadow, transform;
@@ -126,8 +126,21 @@ header {
     font-size: 1.375rem;
     font-weight: 400;
     line-height: 1.75rem;
+    padding: 10px 10px;
     padding-bottom: 12px;
     padding-top: 16px;
+}
+
+.modal-content{
+    border-radius: 8px;
+    border: 0.5px solid #d3d3d3;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+        0 2px 6px 2px rgba(60, 64, 67, 0.149);
+    margin: 32px auto 16px auto;
+    max-width: 496px;
+    transition-duration: 0.218s;
+    transition-property: background, border, opacity, box-shadow, transform;
+    transition-timing-function: ease-in;
 }
 
 .modal-text {
@@ -146,7 +159,9 @@ header {
     font-size: 14px;
     line-height: 19px;
     min-height: 46px;
-    padding: 4px 16px 12px 0px;
+    padding: 10px 10px;
+    padding-bottom: 12px;
+    padding-top: 16px;
 }
 
 #note-title {
@@ -295,10 +310,13 @@ input:focus {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 1rem 0.5rem;
     padding-bottom: 0;
     width: 24rem;
     border-radius: 0.5rem;
+}
+
+.modal-content  .modal-formb{
+    padding-left: 10px;
 }
 
 .modal-close-button {

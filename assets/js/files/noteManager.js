@@ -1,7 +1,7 @@
+import Auth from "./../modules/auth.js";
+
 export default class NoteManager {
-    static notesList = [
-        
-    ];
+    static notesList = [];
 
     constructor(id, title, text, priority, color, date, collaborator = [], pin, user_id, remind_date, image, edited = false){
         this.id             = id;
@@ -36,9 +36,18 @@ export default class NoteManager {
             return shared;
         }
     }
+
+    static findById = (id) => {
+        const note = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? 
+                        NoteManager.filterUserNotes(JSON.parse(localStorage.getItem('notes')) , 
+                                                    Auth.getUser().u_id).filter( note => { 
+                                                        return note.id == id; 
+                                                    })[0] : null;
+        return note;
+    }
     
     static getAllNotes(){
-        return JSON.parse(localStorage.getItem('notes'));
+        return (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
     }
     
     static convertToJson = (note) => {
@@ -61,8 +70,21 @@ export default class NoteManager {
     }
     
     static addNewNote(note){
-        const pushed = NoteManager.notesList.push(note);
-        return (pushed ==  true) ? true : false;
+        if(Boolean(note)){
+            const jsonNote = NoteManager.convertToJson(note);
+            NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
+            NoteManager.notesList.push(jsonNote);
+            localStorage.setItem('notes', JSON.stringify(NoteManager.notesList));
+        }
+    }
+
+    static updateNote(note){
+        if(Boolean(note)){
+            const jsonNote = NoteManager.convertToJson(note);
+            NoteManager.notesList.push(jsonNote);
+            localStorage.removeItem('notes');
+            localStorage.setItem('notes', JSON.stringify(NoteManager.notesList));
+        }
     }
 }
 

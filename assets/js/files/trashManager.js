@@ -28,6 +28,36 @@ export default class TrashManager{
         
     }
 
+    static removeFromTrash = (note_id) => {
+        TrashManager.trashJson = (Boolean(JSON.parse(localStorage.getItem('trashNotes')))) ? JSON.parse(localStorage.getItem('trashNotes')) : [];
+        if(TrashManager.trashJson.length > 0){
+            TrashManager.trashJson.forEach( item =>{
+                if(item.id == note_id){
+                    TrashManager.trashJson.pop(item);
+                    localStorage.removeItem('trashNotes');
+                    localStorage.setItem('trashNotes', JSON.stringify(TrashManager.trashJson));
+                }
+            });
+        }
+    }
+
+    static restoreFromTrash = (note_id) => {
+        TrashManager.trashJson = (Boolean(JSON.parse(localStorage.getItem('trashNotes')))) ? JSON.parse(localStorage.getItem('trashNotes')) : [];
+        if(TrashManager.trashJson.length > 0){
+            TrashManager.trashJson.forEach( item =>{
+                if(item.id == note_id){
+                    TrashManager.trashJson.pop(item);
+                    NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
+                    NoteManager.notesList.push(item);
+                    localStorage.removeItem('trashNotes');
+                    localStorage.removeItem('notes');
+                    localStorage.setItem('trashNotes', JSON.stringify(TrashManager.trashJson));
+                    localStorage.setItem('notes', JSON.stringify(NoteManager.notesList));
+                }
+            });
+        }
+    }
+
     static reBuildStorageData = (note_id, type = false) => {
         if(type){
             let localNotes = JSON.parse(localStorage.getItem('notes'));
@@ -46,4 +76,5 @@ export default class TrashManager{
             localStorage.setItem('notes', JSON.stringify(afterRemoveList));
         }
     }
+    
 }

@@ -12,14 +12,14 @@ export default class Element{
     static lblPass      = document.querySelector('#lbl_pass');
 
     // MAIN SECTION
-    static mainSection  = document.querySelector('.main');
-    static userImg      = document.querySelector('.user-img');
-    static signOutBtn   = document.querySelector('.signOutBtn');
-    static modalList    = document.querySelector('#modalList');
-    static btnModalLists= document.querySelector('.btnModalLists');
-    static home_content = document.querySelector('.home_content');
-    static noteBtn      = document.querySelectorAll('.noteBtn');
-    static collabList   = document.querySelector('.collabList');
+    static mainSection              = document.querySelector('.main');
+    static userImg                  = document.querySelector('.user-img');
+    static signOutBtn               = document.querySelector('.signOutBtn');
+    static modalList                = document.querySelector('#modalList');
+    static btnModalLists            = document.querySelector('.btnModalLists');
+    static home_content             = document.querySelector('.home_content');
+    static noteBtn                  = document.querySelectorAll('.noteBtn');
+    static collabList               = document.querySelector('.collabList');
 
     // TOP ROW BUTTONS
     static btnRefresh   = document.querySelector('.btnRefresh');
@@ -36,6 +36,11 @@ export default class Element{
     static closeBtn        = document.querySelector('.closeBtn');
     static trashBtn        = document.querySelectorAll('.trashBtn');
     static trashBtn_i      = document.querySelectorAll('.trashBtn>i');
+    static pinBtns         = document.querySelectorAll('.pinBtn');
+
+    // TRASH BUTTONS
+    static restoreBtn        = document.querySelectorAll('.restoreBtn');
+    static removeBtn         = document.querySelectorAll('.removeBtn');
 
     // MODAL DIALOG
     static modal            = document.querySelector('.modal');
@@ -52,15 +57,15 @@ export default class Element{
     static noteMainBody     = document.querySelector('.noteMainBody');
     static trashMainBody    = document.querySelector('.trashMainBody');
     static noteBoxs         = document.querySelectorAll('.note');
+    static reminderMainList = document.querySelector('.reminderMainList');
+    static rmListcon        = document.querySelector('.rm-listcon');
 
     // FORM BUTTONS
-    static colorBtn         = document.querySelector('.colorBtn');
-    static priorityBtn      = document.querySelector('.priorityBtn');
-    static remindBtn        = document.querySelector('.remindBtn');
-    static collaboratorBtn  = document.querySelector('.collaboratorBtn');
+    static colorBtn         = document.querySelectorAll('.colorBtn');
+    static priorityBtn      = document.querySelectorAll('.priorityBtn');
+    static remindBtn        = document.querySelectorAll('.remindBtn');
+    static collaboratorBtn  = document.querySelectorAll('.collaboratorBtn');
     static bmdl             = document.querySelectorAll('.bmdl');
-    static tagBtn           = document.querySelector('.tagBtn');
-    static imgBtn           = document.querySelector('.imgBtn');
 
     // FORM BUTTON MODALS
     static colorList        = document.querySelector('.colorList');
@@ -75,33 +80,25 @@ export default class Element{
     static collaboratorSave = document.querySelector('#collaboratorSave');
     static colab            = document.querySelector('.colab');
     static colab_list       = document.querySelector('#colab_list');
-    static imageSave        = document.querySelector('#imageSave');
-    static image            = document.querySelector('#image');
-    static imgList          = document.querySelector('.imgList');
 
     // MODAL FIELDS
     static m_title          = document.querySelector('.modal-title');
     static m_text           = document.querySelector('.modal-text');
     static closeBtnM        = document.querySelector('.closeBtn-m');
+    static btnModalLists_modal      = document.querySelector('.btnModalLists_m');
     // static m_title          = document.querySelector('.modal-title');
     // static m_title          = document.querySelector('.modal-title');
     static mc_button        = document.querySelector('#modal-close-button');
 
     // MODAL BOX BUTTONS LIST
-    // static colorList        = document.querySelector('.colorList');
-    // static colorsDiv        = document.querySelectorAll('.clr');
-    // static priorityList     = document.querySelector('.priorityList');
-    // static priorityStars    = document.querySelectorAll('.prl_i');
-    // static reminderForm     = document.querySelector('.rmd');
-    // static reminderFormBody = document.querySelector('.reminderList');
-    // static time_element     = document.querySelector('.time_element');
-    // static saveTime         = document.querySelector('#saveTime');
-    // static collaboratorList = document.querySelector('.collaboratorList');
-    // static collaboratorSave = document.querySelector('#collaboratorSave');
+    static colorList_m        = document.querySelector('.colorList_m');
+    static priorityList_m     = document.querySelector('.priorityList_m');
+    static priorityStars_m    = document.querySelectorAll('.prl_i_m');
+    static reminderFormBody_m = document.querySelector('.reminderList_m');
+    static time_element_m     = document.querySelector('.time_element_m');
+    static saveTime_m         = document.querySelector('#saveTime_m');
+    static collaboratorList_m = document.querySelector('.collaboratorList_m');
+    static collaboratorSave_m = document.querySelector('#collaboratorSave_m');
     // static colab            = document.querySelector('.colab');
     // static colab_list       = document.querySelector('#colab_list');
-    // static imageSave        = document.querySelector('#imageSave');
-    // static image            = document.querySelector('#image');
-    // static imgList          = document.querySelector('.imgList');
-
 }
