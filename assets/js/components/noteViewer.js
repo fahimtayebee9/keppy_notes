@@ -152,13 +152,16 @@ export default class NoteViewer{
     static saveEditedNote = () => {
         const note = NoteManager.findById(document.querySelector('#nid_hdn').value);
         NoteManager.notesList = (Boolean(JSON.parse(localStorage.getItem('notes')))) ? JSON.parse(localStorage.getItem('notes')) : [];
-        
-        if(Boolean(Element.m_title.value) && Boolean(Element.m_text.value) && Element.m_title.value.trim() != note.title.trim() || Element.m_text.value.trim() != note.text.trim()){
-
+        console.log(NoteManager.notesList)
+        if(Boolean(Element.m_title.value) && Boolean(Element.m_text.value)){
             NoteManager.notesList.pop(note);
+            console.log(NoteManager.notesList)
             note.title  = Element.m_title.value;
             note.text   = Element.m_text.value;
             note.date   = new Date();
+            note.color  = localStorage.getItem('note_bg');
+            note.priority  = localStorage.getItem('priority_val');
+            note.remind_date  = localStorage.getItem('remind_date');
             note.edited = true;
 
             const jsonNote = NoteManager.convertToJson(note);

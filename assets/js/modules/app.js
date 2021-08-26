@@ -6,18 +6,7 @@ import NoteViewer from "../components/noteViewer.js";
 import TrashViewer from "../components/trashViewer.js";
 
 export default class App{
-    static init = () => {
-        Auth.renderAll();
-        if(Auth.checkUser()){
-            NoteViewer.displayNotes();
-            App.eventListeners();
-            setInterval(()=>{
-                NoteViewer.displayReminderMain();
-                App.makeAlert();
-            });
-        }
-    }
-
+    
     static openForm = () => {
         Element.noteTitle.style.display     = "block";
         Element.nBtnBody.style.display      = "flex";
@@ -30,11 +19,34 @@ export default class App{
         Element.clBtns.style.display        = "none";
     }
 
+    static colorActive = () => {
+        Element.colorsDiv.forEach(item => {
+            console.log(item.classList.contains(localStorage.getItem('note_bg')))
+            if(item.classList.contains(localStorage.getItem('note_bg'))){
+                item.classList.add('clr-active');
+            }
+            else if(!item.classList.contains(localStorage.getItem('note_bg'))){
+                item.classList.remove('clr-active');
+            }
+        });
+
+        Element.colorsDiv_m.forEach(item => {
+            console.log(item.classList.contains(localStorage.getItem('note_bg')))
+            if(item.classList.contains(localStorage.getItem('note_bg'))){
+                item.classList.add('clr-active');
+            }
+            else if(!item.classList.contains(localStorage.getItem('note_bg'))){
+                item.classList.remove('clr-active');
+            }
+        });
+    }
+
     static fromButtonActionResult = () => {
         Element.colorsDiv.forEach(item => {
             if(Element.btnModalLists.classList.contains('active')){
                 Element.btnModalLists.classList.remove('active');
             }
+            
             item.addEventListener('click', event => {
                 event.stopPropagation();
                 const bg_color = event.target.id;
@@ -82,7 +94,6 @@ export default class App{
             Element.collaboratorList.classList.toggle('active');
             Element.btnModalLists.classList.remove('active');
         });
-
     }
 
     static closeModal = (event) => {
@@ -92,6 +103,7 @@ export default class App{
     static formButtonAction = () => {
         Element.colorBtn.forEach(item => {
             item.addEventListener('click', event => {
+                App.colorActive();
                 event.stopPropagation();
                 if(event.target.id == "modal_clrb" || event.target.closest('#modal_clrb')){
                     Element.btnModalLists_modal.classList.toggle('active');
@@ -132,21 +144,6 @@ export default class App{
             });
         });
 
-        Element.collaboratorBtn.forEach( item => {
-            item.addEventListener('click', event => {
-                event.stopPropagation();
-                if(event.target.id == "modal_collab" || event.target.closest('#modal_collab')){
-                    Element.btnModalLists_modal.classList.toggle('active');
-                    Element.collaboratorList_m.classList.toggle('active');
-                }
-                else{
-                    Element.btnModalLists.classList.toggle('active');
-                    Element.collaboratorList.classList.toggle('active');
-                }
-                App.displayUsersList();
-            });
-        });
-
         // document.querySelector('.modal').addEventListener('click', event => {
         //     event.stopPropagation();
         //     this.closeModal(event);
@@ -160,6 +157,53 @@ export default class App{
         localStorage.removeItem('collaborator');
         localStorage.removeItem('tags');
         localStorage.removeItem('image');
+    }
+
+    static modalFormButtonAction = () => {
+        Element.colorsDiv_m.forEach(item => {
+            if(Element.btnModalLists_modal.classList.contains('active')){
+                Element.btnModalLists_modal.classList.remove('active');
+            }
+            
+            item.addEventListener('click', event => {
+                event.stopPropagation();
+                const bg_color = event.target.id;
+                localStorage.setItem('note_bg', bg_color);
+                Element.colorList_m.classList.toggle('active');
+                Element.btnModalLists_modal.classList.remove('active');
+            });
+        });
+
+        Element.priorityStars_m.forEach(item => {
+            item.addEventListener('click', event => {
+                event.stopPropagation();
+                const priority_val = event.target.id;
+                for(let i = 0 ; i < priority_val; i++){
+                    if(Element.priorityStars_m[i].classList.contains('far')){
+                        Element.priorityStars_m[i].classList.remove('far');
+                        Element.priorityStars_m[i].classList.add('fas');
+                    }
+                    else{
+                        for(let i = Element.priorityStars_m.length - 1 ; i > priority_val - 1; i--){
+                            Element.priorityStars_m[i].classList.add('far');
+                            Element.priorityStars_m[i].classList.remove('fas');
+                        }
+                    }
+                }
+                localStorage.setItem('priority_val', priority_val);
+                Element.priorityList_m.classList.toggle('active');
+                Element.btnModalLists_modal.classList.remove('active');
+            });
+        });
+
+        Element.time_element_m.addEventListener('change', event => {
+            event.stopPropagation();
+            const reminderTime = Element.time_element_m.value;
+            localStorage.setItem('reminderTime', reminderTime);
+            Element.reminderFormBody_m.classList.toggle('active');
+            Element.btnModalLists_modal.classList.remove('active');
+        });
+
     }
 
     static openEditModal = (event) => {
@@ -289,6 +333,7 @@ export default class App{
         
         App.formButtonAction();
         App.fromButtonActionResult();
+        App.modalFormButtonAction();
 
         document.querySelectorAll('.noteBtn').forEach( item => {
             item.addEventListener('click', e => {
@@ -325,5 +370,21 @@ export default class App{
                 App.removeActive();
             });
         });
+    }
+
+    static init = () => {
+        Auth.renderAll();
+        if(Auth.checkUser()){
+            NoteViewer.displayNotes();
+            App.eventListeners();
+            setInterval(()=>{
+                NoteViewer.displayReminderMain();
+                App.makeAlert();
+            });
+        }
+
+        // localStorage.removeItem('notes');
+        // localStorage.removeItem('trashNotes');
+        
     }
 };

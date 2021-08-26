@@ -689,7 +689,7 @@ body::-webkit-scrollbar-thumb {
   flex-wrap: nowrap;
   align-content: center;
 }
-.clr{
+.clr, .clr_m{
   width: 20px;
   height: 20px;
   border-radius: 25px;

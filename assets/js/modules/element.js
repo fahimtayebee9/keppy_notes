@@ -92,6 +92,7 @@ export default class Element{
 
     // MODAL BOX BUTTONS LIST
     static colorList_m        = document.querySelector('.colorList_m');
+    static colorsDiv_m        = document.querySelectorAll('.clr_m');
     static priorityList_m     = document.querySelector('.priorityList_m');
     static priorityStars_m    = document.querySelectorAll('.prl_i_m');
     static reminderFormBody_m = document.querySelector('.reminderList_m');
