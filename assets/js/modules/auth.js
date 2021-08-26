@@ -44,12 +44,13 @@ export default class Auth{
         if(user == null || user === 'undefined'){
             Element.loginSection.style.display = "block!important";
             Element.mainSection.style.display  = "none";
+            // location.href = "login.html";
             return false;
         }
         else{
-            
             Element.loginSection.style.display = "none!important";
             Element.mainSection.style.display  = "block";
+            // location.href = "index.html";
             Auth.setUserData(user);
             return true;
         }

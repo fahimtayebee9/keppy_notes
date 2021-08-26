@@ -141,9 +141,6 @@
                 </div>
                 <div class="col-md-4  nav-right nav-kp">
                     <div class="user-box btn-list">
-                        <button type="button" class="btn-icon btnRefresh" id="refreshBtn">
-                            <i class="fas fa-redo-alt"></i>
-                        </button>
                         <button type="button" class="btn-icon btnGridList" id="viewBtn">
                             <!-- <i class="far fa-list-alt"></i> -->
                             <i class="fas fa-border-all"></i>
@@ -179,20 +176,6 @@
                                 <span class="links_name">Notes</span>
                             </a>
                             <span class="tooltip-x">Notes</span>
-                        </li>
-                        <li>
-                            <a href="" id="reminderSb">
-                                <i class='bx bx-window-alt'></i>
-                                <span class="links_name">Reminders</span>
-                            </a>
-                            <span class="tooltip-x">Reminders</span>
-                        </li>
-                        <li>
-                            <a href="" id="collabSb">
-                                <i class='bx bxs-user-detail'></i>
-                                <span class="links_name">Collaborated</span>
-                            </a>
-                            <span class="tooltip-x">Collaborated</span>
                         </li>
                         <li>
                             <a href="" id="trashSb">
@@ -390,14 +373,14 @@
             });
         }
 
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            document.querySelectorAll('.pinBtn').forEach(item => {
-                item.addEventListener('click', event => {
-                    $(event.target.id).tooltip('hide');
-                });
-            });
-        });
+        // $(function () {
+        //     $('[data-toggle="tooltip"]').tooltip();
+        //     document.querySelectorAll('.pinBtn').forEach(item => {
+        //         item.addEventListener('click', event => {
+        //             $(event.target.id).tooltip('hide');
+        //         });
+        //     });
+        // });
 
     </script>
 
